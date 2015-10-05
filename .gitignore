@@ -1,8 +1,11 @@
 assets/*
 .buildpath
 cms/
+cwp-core/
 .DS_Store
+environmentcheck/
 framework/
+hybridsessions/
 .idea
 .project
 .settings
