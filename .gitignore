@@ -1,10 +1,12 @@
 assets/*
-_ss_environment.php
-tools/phing-metadata
-silverstripe-cache
 .buildpath
+cms/
+.DS_Store
+framework/
+.idea
 .project
 .settings
-.idea
-.DS_Store
+silverstripe-cache
+_ss_environment.php
+tools/phing-metadata
 vendor/
