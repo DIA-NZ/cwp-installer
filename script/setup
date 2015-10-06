@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#. script/bootstrap
+. script/bootstrap
 
 if [ ! -f "_ss_environment.php" -a ! -f "../_ss_environment.php" ]; then
 	echo "_ss_environment.php not found in this directory or the one above."
