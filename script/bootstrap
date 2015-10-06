@@ -4,3 +4,9 @@ if [ -f "composer.json" ]; then
 	echo "Installing composer dependencies"
 	composer install
 fi
+
+command -v sake >/dev/null 2>&1 || {
+	echo "Sake is not installed." >&2
+	echo "Install with: sudo ./framework/sake installsake" >&2
+	return 1
+}

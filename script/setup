@@ -1,0 +1,74 @@
+#!/bin/sh
+
+#. script/bootstrap
+
+if [ ! -f "_ss_environment.php" -a ! -f "../_ss_environment.php" ]; then
+	echo "_ss_environment.php not found in this directory or the one above."
+
+	echo -n "File location? [. or ..]: "
+	read location_input
+
+	environment_type="dev"
+	echo -n "Enter environment type [$environment_type]: "
+	read environment_type_input
+	environment_type="${environment_type_input:-$environment_type}"
+
+	database_server="localhost"
+	echo -n "Enter database server [$database_server]: "
+	read database_server_input
+	database_server="${database_server_input:-$database_server}"
+
+	database_user="root"
+	echo -n "Enter database user [$database_user]: "
+	read database_user_input
+	database_user="${database_user_input:-$database_user}"
+
+	database_pass=""
+	echo -n "Enter database password [$database_pass]: "
+	read -s database_pass_input
+	database_pass="${database_pass_input:-$database_pass}"
+
+	echo ""
+
+	database_name="silverstripe"
+	echo -n "Enter database name [$database_name]: "
+	read database_name_input
+	database_name="${database_name_input:-$database_name}"
+
+	admin_user="admin"
+	echo -n "Enter default admin username [$admin_user]: "
+	read admin_user_input
+	admin_user="${admin_user_input:-$admin_user}"
+
+	admin_password="password"
+	echo -n "Enter default admin password [$admin_password]: "
+	read -s admin_password_input
+	admin_password="${admin_password_input:-$admin_password}"
+
+	echo ""
+
+	mapping_url="http://localhost";
+	echo -n "Enter URL for file to url mapping [$mapping_url]: "
+	read mapping_url_input
+	mapping_url="${mapping_url_input:-$mapping_url}"
+
+    environment_file="<?php
+
+define('SS_ENVIRONMENT_TYPE', '$environment_type');
+
+define('SS_DATABASE_SERVER', '$database_server');
+define('SS_DATABASE_USERNAME', '$database_user');
+define('SS_DATABASE_PASSWORD', '$database_pass');
+define('SS_DATABASE_NAME', '$database_name');
+
+define('SS_DEFAULT_ADMIN_USERNAME', '$admin_user');
+define('SS_DEFAULT_ADMIN_PASSWORD', '$admin_password');
+
+global \$_FILE_TO_URL_MAPPING;
+\$_FILE_TO_URL_MAPPING['$(pwd)'] = '$mapping_url';
+";
+
+	echo -n $environment_file > $location_input/_ss_environment.php
+fi
+
+sake dev/build flush=all
